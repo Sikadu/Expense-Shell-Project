@@ -45,7 +45,5 @@ VALIDATE $? "Enabled mysql"
 systemctl start mysqld
 VALIDATE $? "started mysql"
 
-mysql_secure_installtion --set-root-pass ExpenseApp@1
-
-dnf list installed mysql
+dnf list installed mysql-server
 VALIDATE $? "mysql installed successfully"
