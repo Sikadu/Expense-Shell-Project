@@ -39,10 +39,10 @@ CHECK_ROOT
 dnf install mysql-server -y
 VALIDATE $? "Installed mysql"
 
-sytemctl enable mysqld
+systemctl enable mysqld
 VALIDATE $? "Enabled mysql"
 
-sytemctl start mysqld
+systemctl start mysqld
 VALIDATE $? "started mysql"
 
 mysql_secure_installtion --set-root-pass ExpenseApp@1
