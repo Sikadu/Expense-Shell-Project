@@ -16,7 +16,7 @@ CHECK_ROOT( )
 {
 if [ $USERID -ne 0 ]
 then
-echo " please run the script with root "
+echo -e "$R Please run this script with root priveleges $N" | tee -a $LOG_FILE
 exit1
 fi
 }
@@ -25,25 +25,34 @@ VALIDATE()
 {
 if [ $1 -ne 0 ]
 then
-echo -e " $R $2 is not success $N " | tee -a $LOG_FILE
-else 
-echo -e " $G $2 is success $N " | tee -a $LOG_FILE
-fi
+echo -e "$2 is...$R FAILED $N"  | tee -a $LOG_FILE
+        exit 1
+    else
+echo -e "$2 is... $G SUCCESS $N" | tee -a $LOG_FILE
 }
 
 echo -e "$Y script started execution at : $(date) $N"
 
 CHECK_ROOT
 
-
-dnf install mysql-server -y
+dnf install mysql-server -y &>>$LOG_FILE
 VALIDATE $? "Installed mysql"
 
-systemctl enable mysqld
-VALIDATE $? "Enabled mysql"
+systemctl enable mysqld &>>$LOG_FILE
+VALIDATE $? "Enabled mysql"1A
 
-systemctl start mysqld
+systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "started mysql"
-
+    
 dnf list installed mysql-server
 VALIDATE $? "mysql installed successfully"
+
+mysql -h mysql.sikadu.online -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
+if [ $? -ne 0 ]
+then
+    echo "MySQL root password is not setup, setting now" &>>$LOG_FILE
+    mysql_secure_installation --set-root-pass ExpenseApp@1
+    VALIDATE $? "Setting UP root password"
+else
+    echo -e "MySQL root password is already setup...$Y SKIPPING $N" | tee -a $LOG_FILE
+fi
