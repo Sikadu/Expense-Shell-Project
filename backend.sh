@@ -72,7 +72,7 @@ cp /home/ec2-user/Expense-Shell-Project/backend.service /etc/systemd/system/back
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "install mysql"
 
-mysql -h mysql.sikadu.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$LOG_FILE
+mysql -h mysql.sikadu.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
 VALIDATE $? "schema loading"
 
 systemctl daemon-reload &>>$LOG_FILE
