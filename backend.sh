@@ -55,7 +55,7 @@ else
     echo -e "expense user already exists...$Y SKIPPING $N"
 fi
 
-mkdir /app
+mkdir -p /app
 VALIDATE $? "creating app folder"
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOG_FILE
@@ -67,7 +67,7 @@ unzip /tmp/backend.zip &>>$LOG_FILE
 VALIDATE $? "Extracting backend application code"
 
 npm install &>>$LOG_FILE
-cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service
+cp /home/ec2-user/Expense-Shell-Project/backend.service /etc/systemd/system/backend.service
 
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "install mysql"
