@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOGS_FOLDER="\var\log\expense_shell"
+LOGS_FOLDER="\var\log\expense"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
 LOG_FILE=$LOGS_FOLDER/$SCRIPT_NAME-$TIMESTAMP.log
@@ -29,6 +29,7 @@ echo -e "$2 is...$R FAILED $N"  | tee -a $LOG_FILE
         exit 1
     else
 echo -e "$2 is... $G SUCCESS $N" | tee -a $LOG_FILE
+fi
 }
 
 echo -e "$Y script started execution at : $(date) $N"
