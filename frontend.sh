@@ -36,23 +36,23 @@ echo -e "$Y script started execution at : $(date) $N"
 
 CHECK_ROOT
 
-dnf install nginx -y &>>$LOG_FILE
+dnf install nginx -y 
 VALIDATE $? "Install nginx"
 
-systemctl enable nginx &>>$LOG_FILE
+systemctl enable nginx 
 VALIDATE $? "Enable nginx"1A
 
-systemctl start nginx &>>$LOG_FILE
+systemctl start nginx 
 VALIDATE $? "start nginx"
     
-rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
+rm -rf /usr/share/nginx/html/* 
 VALIDATE $? "Removing default website"
 
 curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOG_FILE
 VALIDATE $? "Downloding frontend code"
 
 cd /usr/share/nginx/html
-unzip /tmp/frontend.zip &>>$LOG_FILE
+unzip /tmp/frontend.zip 
 VALIDATE $? "Extract frontend code"
 
 cp /home/ec2-user/Expense-Shell-Project/expense.conf /etc/nginx/default.d/expense.conf
